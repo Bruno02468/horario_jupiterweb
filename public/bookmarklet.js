@@ -38,7 +38,7 @@ function ensure_tables() {
 
 // função auxiliar para entrar em elementos profundos
 function inner(elem, arr) {
-  for (i of arr) {
+  for (const i of arr) {
     elem = elem.children[i];
   }
   return elem;
@@ -69,10 +69,10 @@ async function tab2json(base, delay) {
   // passo 2: extrair as aulas por linha
   const gh = inner(base, [2, 2, 0, 1, 0]);
   let inf = {}, classes = [];
-  for (tr of gh.rows) {
+  for (const tr of gh.rows) {
     if (!tr.id) continue;
     let start = null, end = null, iday = -2;
-    for (td of tr.cells) {
+    for (const td of tr.cells) {
       const txt = td.innerText.trim();
       if (!start) {
         start = txt;
@@ -83,6 +83,7 @@ async function tab2json(base, delay) {
         const cod = txt.substring(0, 7);
         classes.push({
           "codigo": cod,
+          "dia": day,
           "inicio": start,
           "fim": end
         });
@@ -98,8 +99,7 @@ async function tab2json(base, delay) {
   }
   return {
     "aulas": classes,
-    "detalhes": inf,
-    "dias": days
+    "detalhes": inf
   };
 }
 

@@ -1,5 +1,9 @@
 /* eu já falei que odeio CSS? */
 
+a {
+  font-weight: bold !important;
+}
+
 .center {
   text-align: center;
 }
@@ -10,4 +14,15 @@
 
 .right {
   text-align: right;
+}
+
+input[type=color] {
+  width: 4rem;
+  border: 2px solid gray;
+  padding: 0;
+}
+
+.color_example {
+  font-size: 70%;
+  margin-left: 1rem;
 }
