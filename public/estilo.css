@@ -17,12 +17,50 @@ a {
 }
 
 input[type=color] {
-  width: 4rem;
+  width: 15rem;
+  height: 3rem;
   border: 2px solid gray;
+  margin: 0;
   padding: 0;
 }
 
+input[type=range] {
+  margin-bottom: 0;
+}
+
+input {
+  margin-right: 1rem;
+}
+
 .color_example {
-  font-size: 70%;
+  font-size: 80%;
+  font-weight: bold;
   margin-left: 1rem;
+}
+
+#mt {
+  border-collapse: collapse;
+  display: inline-table;
+  table-layout: fixed;
+  width: 95%;
+}
+
+#mb td, #mh th {
+  border: 1px solid gray;
+  text-align: center;
+  background-color: #f0f0f0;
+}
+
+#mb td {
+  font-size: 80%;
+  font-weight: bold;
+  padding-left:  0.4rem;
+  padding-right: 0.4rem;
+}
+
+#mb td>span {
+  background-color: rgba(255, 255, 255, 0.7);
+  display: inline-block;
+  margin-bottom: 1rem;
+  max-width: 90%;
 }

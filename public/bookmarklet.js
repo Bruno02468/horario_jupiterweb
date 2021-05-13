@@ -80,18 +80,22 @@ async function tab2json(base, delay) {
         end = txt;
       } else if (txt) {
         const day = days[iday];
-        const cod = txt.substring(0, 7);
-        classes.push({
-          "codigo": cod,
-          "dia": day,
-          "inicio": start,
-          "fim": end
-        });
-        if (!(cod in inf)) {
-          // pegar os detalhes dessa disciplina
-          td.children[0].click();
-          await sleep(delay);
-          inf[cod] = get_deets();
+        for (const anchor of td.children) {
+          const atxt = anchor.innerText.trim();
+          const cod = atxt.substring(0, 7);
+          classes.push({
+            "codigo": cod,
+            "dia": day,
+            "inicio": start,
+            "fim": end
+          });
+          if (!(cod in inf)) {
+            // pegar os detalhes dessa disciplina
+            anchor.click();
+            await sleep(delay);
+            inf[cod] = get_deets();
+            await sleep(delay/2);
+          }
         }
       }
       iday++;
@@ -99,7 +103,8 @@ async function tab2json(base, delay) {
   }
   return {
     "aulas": classes,
-    "detalhes": inf
+    "detalhes": inf,
+    "ver": 1
   };
 }
 
