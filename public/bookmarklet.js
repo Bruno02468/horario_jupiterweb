@@ -121,7 +121,7 @@ function credir(obj, home) {
 async function fire() {
   // todas as constantes que regem o funcionamento do script
   const tgt = "https://uspdigital.usp.br/jupiterweb/gradeHoraria?codmnu=4759";
-  const home = "http://segredos.oisumida.rs/horario_jupiterweb/";
+  const home = "http://oisumida.rs/horario_jupiterweb/";
   const delay = 1000;
   // sequência de eventos: certificar, puxar, comprimir, e redirecionar
   if (!ensure_url(tgt)) return false;
