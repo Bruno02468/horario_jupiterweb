@@ -61,7 +61,17 @@ input {
 #mb td>span {
   background-color: rgba(255, 255, 255, 0.7);
   display: inline-block;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   max-width: 90%;
   padding: 0.5rem;
+}
+
+#iaulas select {
+  font-size: 80%;
+  font-weight: bold;
+}
+
+.btns button {
+  width: 90%;
 }

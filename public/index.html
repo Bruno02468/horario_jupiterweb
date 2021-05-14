@@ -91,7 +91,7 @@
           <div class="six columns left">
             <label for="opt_prop">
               <input type="checkbox" id="opt_prop" onchange="regen()">
-              Linhas de altura proporcional à duração
+              Linhas proporcionais (não implementado! ignorar)
             </label>
             <label for="opt_sep">
               <input type="checkbox" id="opt_sep" onchange="regen()">
@@ -152,13 +152,18 @@
           </div>
         </div>
         <hr>
-        <div class="row">
-          <div class="twelve columns">
-            Nomes e cores das disciplinas:
+        <br>
+        <div class="row btns">
+          <div class="six columns">
+            <button onclick="edit()">Editar horário e aulas</button>
+          </div>
+          <div class="six columns">
+            <button onclick="window.location.assign('./')">
+              Apagar grade (pense bem)
+            </button>
           </div>
         </div>
-        <br>
-        <div class="row">
+        <div class="row btns">
           <div class="four columns">
             <button onclick="color_shuffle()">Randomizar ordem</button>
           </div>
@@ -166,7 +171,7 @@
             <button onclick="color_default()">Randomizar cores</button>
           </div>
           <div class="four columns">
-            <button onclick="window.location.reload()">Resetar</button>
+            <button onclick="window.location.reload()">Resetar nomes</button>
           </div>
         </div>
         <br>
@@ -211,6 +216,7 @@
         </div>
       </div>
     </div>
-    <script src="bor.js"></script>
+    <script src="geral.js"></script>
+    <script src="view.js"></script>
   </body>
 </html>
