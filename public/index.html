@@ -60,9 +60,9 @@
           executar o código.
           <br>
           <hr>
-          Se você não confia em mim , você pode ver
+          Se você não confia em mim, sempre dá pra
           <a href="bookmarklet.js">
-            o código original
+            o código não-minificado
           </a>
           e executar manualmente (e.g. colando no console).
           <br>
@@ -72,13 +72,16 @@
           poder editar a aparência etc. e imprimir se quiser.
           <br>
           <br>
-          <i>
+          <small><i>
             Para os nerds: o treco na URL é um JSON comprimido usando
             <a href="https://github.com/pieroxy/lz-string" target="_blank">
               lz-string
             </a>
-            para caber na URL (comprime pra 2/3 do tamanho original).
-          </i>
+            para caber na URL (30% a 50% de compressão).
+            <br>
+            O <code>#fragmento</code> é a mesma coisa, mas contendo as opções e
+            escolhas de cores.
+          </i></small>
         </div>
       </div>
       <div id="has_enc">
@@ -154,10 +157,15 @@
         <hr>
         <br>
         <div class="row btns">
-          <div class="six columns">
+          <div class="four columns">
             <button onclick="edit()">Editar horário e aulas</button>
           </div>
-          <div class="six columns">
+          <div class="four columns">
+            <button onclick="imprimir()">
+              Imprimir/screenshot
+            </button>
+          </div>
+          <div class="four columns">
             <button onclick="window.location.assign('./')">
               Apagar grade (pense bem)
             </button>

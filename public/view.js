@@ -228,7 +228,9 @@ function frag2opt() {
 // carrega as opções de objeto pros elementos
 function obj2opt(obj) {
   for (const oname in obj) {
-    input_set(document.getElementById(`opt_${oname}`), obj[oname]);
+    try {
+      input_set(document.getElementById(`opt_${oname}`), obj[oname]);
+    } catch (e) {}
   }
 }
 
@@ -236,6 +238,11 @@ function obj2opt(obj) {
 function edit() {
   const o = compress(JSON.stringify(g));
   window.location.assign("editor/?o=" + o);
+}
+
+// abre uma nova guia pra imprimir
+function imprimir() {
+  print_element(document.getElementById("mt"));
 }
 
 // monta a tabela com o horário
