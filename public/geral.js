@@ -227,6 +227,6 @@ function print_element(elem) {
   nw.document.write(elem.outerHTML);
   nw.document.head.innerHTML = document.head.innerHTML;
   nw.document.title = "Horário";
-  nw.document.bosy.style.margin = "3rem";
+  nw.document.body.style.margin = "3rem";
   nw.focus();
 }

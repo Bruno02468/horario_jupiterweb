@@ -91,67 +91,83 @@
         </div>
         <hr>
         <div class="row">
-          <div class="six columns left">
-            <label for="opt_prop">
-              <input type="checkbox" id="opt_prop" onchange="regen()">
-              Linhas proporcionais (não implementado! ignorar)
-            </label>
-            <label for="opt_sep">
-              <input type="checkbox" id="opt_sep" onchange="regen()">
-              Espaço entre departamento e código
-            </label>
-            <label for="opt_evil">
-              <input type="checkbox" id="opt_evil" onchange="regen()">
-              Usar formato de 12 horas AM/PM
-            </label>
-            <label for="opt_nosab">
-              <input type="checkbox" id="opt_nosab" onchange="regen()">
-              Pular sábado
-            </label>
+          <div class="four columns">
+            <div class="formy">
+              <label for="opt_prop" style="display: none !important;">
+                <input type="checkbox" id="opt_prop" onchange="regen()">
+                <span>Linhas proporcionais (não implementado! ignorar)</span>
+              </label>
+              <label for="opt_sep">
+                <input type="checkbox" id="opt_sep" onchange="regen()">
+                <span>Espaço entre departamento e código</span>
+              </label>
+              <label for="opt_evil">
+                <input type="checkbox" id="opt_evil" onchange="regen()">
+                <span>Usar formato de 12 horas AM/PM</span>
+              </label>
+              <label for="opt_nosab">
+                <input type="checkbox" id="opt_nosab" onchange="regen()">
+                <span>Pular sábado</span>
+              </label>
+              <label for="opt_shuf">
+                <input type="checkbox" id="opt_shuf" onchange="regen()">
+                <span>Embaralhar listras</span>
+              </label>
+            </div>
           </div>
-          <div class="six columns right">
-            Disciplinas:
-            <select id="opt_fmt" onchange="regen()">
-              <option value="C">Apenas código</option>
-              <option value="N">Apenas nome</option>
-              <option value="CN">Código e nome</option>
-              <option value="C!n">Código em destaque e nome abaixo</option>
-              <option value="N!c">Nome em destaque e código abaixo</option>
-            </select>
-            <br>
-            Nomes dos dias da semana:
-            <select id="opt_fday" onchange="regen()">
-              <option value="letra">Letras (terça = "T")</option>
-              <option value="abreviado">Abreviados (terça = "Ter")</option>
-              <option value="coloquial" selected>
-                Coloquiais (terça = "terça")
-              </option>
-              <option value="completo">
-                Completos (terça = "terça-feira")
-              </option>
-            </select>
-            <br>
-            Estratégia para cores em conflitos:
-            <select id="opt_cmix" onchange="regen()">
-              <option value="stripes">Listras</option>
-              <option value="blend">Misturar</option>
-            </select>
-            <br>
-            <label for="opt_stra">
-              <input type="range" min="0" max="360" step="1" id="opt_stra"
-              onchange="regen()" value="45">
-              Ângulo das listras
-            </label>
-            <label for="opt_strw">
-              <input type="range" min="0" max="4" step="0.25" id="opt_strw"
-              onchange="regen()">
-              Largura das listas
-            </label>
-            <label for="opt_strw">
-              <input type="range" min="0" max="1" step="0.05" id="opt_alpha"
-              onchange="regen()" value="1">
-              Força de mistura de cores
-            </label>
+          <div class="eight columns">
+            <div class="formy">
+              <label for="opt_fmt">
+                <span>Disciplinas:</span>
+                <select id="opt_fmt" onchange="regen()">
+                  <option value="C">Apenas código</option>
+                  <option value="N">Apenas nome</option>
+                  <option value="C-N">Código e nome</option>
+                  <option value="C!n">Código em destaque e nome abaixo</option>
+                  <option value="N!c">Nome em destaque e código abaixo</option>
+                </select>
+              </label>
+              <label for="opt_fday">
+                <span>Nomes dos dias da semana:</span>
+                <select id="opt_fday" onchange="regen()">
+                  <option value="letra">Letras (terça = "T")</option>
+                  <option value="abreviado">Abreviados (terça = "Ter")</option>
+                  <option value="coloquial" selected>
+                    Coloquiais (terça = "terça")
+                  </option>
+                  <option value="completo">
+                    Completos (terça = "terça-feira")
+                  </option>
+                </select>
+              </label>
+              <label for="opt_cmix">
+                <span>Estratégia para cores em conflitos:</span>
+                <select id="opt_cmix" onchange="regen()">
+                  <option value="stripes">Listras</option>
+                  <option value="blend">Misturar</option>
+                </select>
+              </label>
+              <label for="opt_stra">
+                <span>Ângulo das listras:</span>
+                <input type="range" min="0" max="360" step="1" id="opt_stra"
+                onchange="regen()" oninput="regen()" value="45">
+              </label>
+              <label for="opt_strw">
+                <span>Largura das listas:</span>
+                <input type="range" min="0" max="4" step="0.25" id="opt_strw"
+                onchange="regen()" oninput="regen()">
+              </label>
+              <label for="opt_alpha">
+                <span>Alfa (para mistura de cores):</span>
+                <input type="range" min="0" max="1" step="0.05" id="opt_alpha"
+                onchange="regen()" oninput="regen()" value="1">
+              </label>
+              <label for="opt_borr">
+                <span>Bordas redondas:</span>
+                <input type="range" min="0" max="5" step="0.1" id="opt_borr"
+                onchange="regen()" oninput="regen()" value="0">
+              </label>
+            </div>
           </div>
         </div>
         <hr>

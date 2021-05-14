@@ -8,7 +8,7 @@ let g = null;
 // nomes das opções
 const OPTS = [
   "prop", "sep", "evil", "fmt", "fday", "stra", "strw", "cmix", "alpha",
-  "nosab"
+  "nosab", "borr", "shuf"
 ];
 
 // detecta a presença do parâmetro e esconde o div correspondente
@@ -144,8 +144,10 @@ function blend(colors) {
 }
 
 // estratégia de combinação de cores: listras (gera um gradiente)
-function stripes(colors, angle, width) {
-  shuffle(colors);
+function stripes(colors, angle, width, shuf) {
+  if (shuf) {
+    shuffle(colors);
+  }
   colors = colors.map((c) => rgb2css(hex2rgb(c)));
   let cs = [];
   for (let rems = 1; rems < colors.length; rems++) {
@@ -158,13 +160,17 @@ function stripes(colors, angle, width) {
 }
 
 // gera propriedade de fundo baseado em cores e opções
-function setbg(elem, colors, strategy, strw, stra, alpha) {
+function setbg(elem, colors, strategy, strw, stra, alpha, shuf) {
+  if (colors.length == 1) {
+    alpha = 1.0;
+  }
+  colors.sort();
   if (strategy == "blend" || colors.length == 1) {
     const color = blend(colors.map((c) => hex2rgba(c, alpha)));
     elem.style.backgroundColor = rgb2css(color);
   } else if (strategy == "stripes") {
     const angle = `${stra}deg`;
-    const rcg = stripes(colors, angle, strw);
+    const rcg = stripes(colors, angle, strw, shuf);
     elem.style.background = rcg;
   } else {
     throw `bad color strategy ${strategy}`;
@@ -172,7 +178,7 @@ function setbg(elem, colors, strategy, strw, stra, alpha) {
 }
 
 // coloca o texto formatado num td
-function aulas_fmt(td, codigos, fmt, dets, sep) {
+function aulas_fmt(td, codigos, fmt, dets, sep, borr) {
   let elems = [];
   for (const cod of codigos) {
     let codigo = dets[cod]["codigo"];
@@ -180,26 +186,32 @@ function aulas_fmt(td, codigos, fmt, dets, sep) {
       codigo = codigo.substring(0, 3) + " " + codigo.substring(3);
     }
     const nome = dets[cod]["nome"];
+    const da_aula = document.createElement("span");
     for (const cf of fmt) {
       const e = document.createElement("span");
       const cl = cf.toLowerCase();
       e.innerText = {
         "c": codigo,
         "n": nome,
-        "!": "\n"
+        "!": "\n",
+        "-": " - "
       }[cl];
       if (cf == cl) {
         e.className = "aula_peq";
       } else {
         e.class_name = "aula_normal";
       }
-      elems.push(() => e);
+      da_aula.appendChild(e);
     }
+    elems.push(() => da_aula);
   }
-  elems = interleave(elems, () => document.createElement("br"));
+  elems = interleave(elems, () => document.createElement("hr"));
+  const cont = document.createElement("span");
+  cont.style.borderRadius = `${borr}rem`;
   for (const elem of elems) {
-    td.appendChild(elem());
+    cont.appendChild(elem());
   }
+  td.appendChild(cont);
 }
 
 // salva as opções para um objeto
@@ -287,9 +299,12 @@ function regen() {
       if (codigos.length > 0) {
         let cores = codigos.map((c) => ins[c].value);
         cores.sort();
-        aulas_fmt(td, codigos, opts["fmt"], g["detalhes"], opts["sep"]);
+        aulas_fmt(
+          td, codigos, opts["fmt"], g["detalhes"], opts["sep"], opts["borr"]
+        );
         setbg(
-          td, cores, opts["cmix"], opts["strw"], opts["stra"], opts["alpha"]
+          td, cores, opts["cmix"], opts["strw"], opts["stra"], opts["alpha"],
+          opts["shuf"]
         );
       }
       tr.appendChild(td);

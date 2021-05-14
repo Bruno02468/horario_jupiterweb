@@ -67,11 +67,63 @@ input {
   padding: 0.5rem;
 }
 
+#mb td>span>hr {
+  margin: 0;
+  border-top: 1px solid rgb(136, 136, 136);
+}
+
+#mb td>span>span {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+}
+
 #iaulas select {
   font-size: 80%;
   font-weight: bold;
 }
 
+.aula_peq {
+  margin-top: 0.1rem;
+  font-size: 80%;
+}
+
 .btns button {
   width: 100%;
+}
+
+.formy {
+  display: inline-table;
+  table-layout: fixed;
+}
+
+.formy>label {
+  display: table-row;
+}
+
+.formy>label>* {
+  display: table-cell;
+  min-height: 5rem;
+}
+
+.formy>label>span:first-child {
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.formy>label>span:last-child {
+  text-align: left;
+}
+
+.formy>label>input[type=range] {
+  vertical-align: middle;
+}
+
+.formy>label>input[type=range], .formy>label>select {
+  width: 100%;
+}
+
+.formy>label>input[type=checkbox] {
+  transform: scale(1.5, 1.5);
+  vertical-align: -moz-middle-with-baseline;
 }
