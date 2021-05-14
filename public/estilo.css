@@ -42,20 +42,20 @@ input {
   border-collapse: collapse;
   display: inline-table;
   table-layout: fixed;
-  width: 95%;
+  min-width: 95%;
 }
 
 #mb td, #mh th {
   border: 1px solid gray;
   text-align: center;
   background-color: #f0f0f0;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 #mb td {
   font-size: 80%;
   font-weight: bold;
-  padding-left:  0.4rem;
-  padding-right: 0.4rem;
 }
 
 #mb td>span {
@@ -63,4 +63,5 @@ input {
   display: inline-block;
   margin-bottom: 1rem;
   max-width: 90%;
+  padding: 0.5rem;
 }

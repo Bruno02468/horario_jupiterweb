@@ -56,13 +56,14 @@ const DIAS = {
 
 // nomes das opções
 const OPTS = [
-  "prop", "sep", "evil", "fmt", "fday", "stra", "strw", "cmix", "alpha"
+  "prop", "sep", "evil", "fmt", "fday", "stra", "strw", "cmix", "alpha",
+  "nosab"
 ];
 
 // função auxiliar: pega o valor de um input
 function input_get(elem) {
   if (elem.type == "checkbox") {
-    return elem.checked == "checked";
+    return elem.checked;
   } else if (elem.type == "range") {
     if (elem.step == 1) {
       return parseInt(elem.value);
@@ -77,7 +78,7 @@ function input_get(elem) {
 // função auxiliar: seta o valor de um input
 function input_set(elem, val) {
   if (elem.type == "checkbox") {
-    return elem.checked == val ? "checked" : "";
+    return elem.checked == val;
   } else {
     return elem.value = val;
   }
@@ -128,9 +129,9 @@ function extract(dbg) {
     hors.push(i);
     hors.push(f);
   }
-  hors = [...new Set(hors)];
-  hors.sort();
-  obj["horarios"] = hors;
+  let nh = [...new Set(hors)];
+  nh.sort((a, b) => a - b);
+  obj["horarios"] = nh;
   return obj;
 }
 
@@ -452,6 +453,7 @@ function regen() {
   hor.innerText = "Horário";
   thr.appendChild(hor);
   for (const dia of g["dias"]) {
+    if (dia == "Sab" && opts["nosab"]) continue;
     const th = document.createElement("th");
     th.innerText = DIAS[opts["fday"]][dia];
     thr.appendChild(th);
@@ -470,6 +472,7 @@ function regen() {
     hb.className = "timeslot";
     tr.appendChild(hb);
     for (const dia of g["dias"]) {
+      if (dia == "Sab" && opts["nosab"]) continue;
       const codigos = byblock(g, dia, inicio, fim);
       const td = document.createElement("td");
       if (codigos.length > 0) {
