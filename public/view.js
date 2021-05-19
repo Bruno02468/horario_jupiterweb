@@ -1,18 +1,17 @@
 // view.js
 // borges 2021 - nenhum direito reservado
-// script principal da página
+// script principal da página de visualização
 
 // armazenado globalmente para não termos que descomprimir toda vez
 let g = null;
 
-// nomes das opções
-const OPTS = [
-  "prop", "sep", "evil", "fmt", "fday", "stra", "strw", "cmix", "alpha",
-  "nosab", "borr", "shuf"
-];
+function ta_na_disney(e) {
+  alert("Não é pra abrir o link aqui!\n\nLeia as instruções com calma.");
+  return false;
+}
 
 // detecta a presença do parâmetro e esconde o div correspondente
-function hide_correct() {
+function kickstart() {
   if (extract(true)) {
     document.getElementById("no_enc").style.display = "none";
     first_run();
@@ -21,17 +20,12 @@ function hide_correct() {
   }
 }
 
-// detectar assim a página carregar (script no final do <body>)
-hide_correct();
-
-// ===== código daqui em diante só para horário carregado (g !== null) =====
-
 // chamada no primeiro carregamento com horário na URL
 function first_run() {
   g = extract();
-  gen_colors();
+  gen_inputs();
   if (window.location.hash.length > 0) {
-    const opts = frag2opt();
+    const opts = frag2obj();
     obj2opt(opts);
   } else {
     color_default();
@@ -39,8 +33,8 @@ function first_run() {
   regen();
 }
 
-// gerar os inputs de cor
-function gen_colors() {
+// gerar os inputs de cor, nome, e links
+function gen_inputs() {
   let col = 0;
   const el = document.getElementById("incolors");
   for (let i = 0; i < 3; i++) {
@@ -51,26 +45,37 @@ function gen_colors() {
     const codigo = a["codigo"];
     const nome = a["nome"];
     const inp = document.createElement("input");
-    const txt = document.createElement("span");
+    const nom = document.createElement("input");
+    const isite = document.createElement("input");
+    const icall = document.createElement("input");
     const tcol = el.children[col];
-    txt.innerText = `${codigo} - ${nome}`;
     inp.type = "color";
-    inp.id = "opt_color_" + k;
-    txt.className = "color_example";
+    inp.id = `opt_color_${k}`;
+    nom.className = "color_example";
     inp.addEventListener("change", function() {
       regen();
     });
-    txt.addEventListener("click", function(evt) {
-      const newname = prompt("Novo nome:", nome);
-      if (newname) {
-        evt.target.innerText = `${codigo} - ${newname}`;
-        g["detalhes"][k]["nome"] = newname;
-      }
-      regen();
-    });
+    nom.type = isite.type = icall.type = "text";
+    isite.placeholder = "Site da disciplina";
+    icall.placeholder = "Call da disciplina";
+    nom.value = nome;
+    nom.id = `opt_name_${k}`;
+    isite.id = `opt_site_${k}`;
+    icall.id = `opt_call_${k}`;
+    const regen_noargs = () => regen();
+    nom.addEventListener("change", regen_noargs);
+    nom.addEventListener("input", regen_noargs);
+    isite.addEventListener("change", regen_noargs);
+    isite.addEventListener("input", regen_noargs);
+    icall.addEventListener("change", regen_noargs);
+    icall.addEventListener("input", regen_noargs);
     tcol.appendChild(inp);
     tcol.appendChild(document.createElement("br"));
-    tcol.appendChild(txt);
+    tcol.appendChild(nom);
+    tcol.appendChild(document.createElement("br"));
+    tcol.appendChild(isite);
+    tcol.appendChild(document.createElement("br"));
+    tcol.appendChild(icall);
     tcol.appendChild(document.createElement("br"));
     tcol.appendChild(document.createElement("br"));
     col = (col + 1) % 3
@@ -144,7 +149,9 @@ function blend(colors) {
 }
 
 // estratégia de combinação de cores: listras (gera um gradiente)
-function stripes(colors, angle, width, shuf) {
+function stripes(colors, opts) {
+  const angle = opts["stra"];
+  const shuf = opts["shuf"];
   if (shuf) {
     shuffle(colors);
   }
@@ -156,11 +163,13 @@ function stripes(colors, angle, width, shuf) {
   }
   cs.push(`${colors[colors.length-1]} ${colors.length*width}rem`);
   const rlg = "repeating-linear-gradient";
-  return `${rlg}(\n  ${angle},\n  ${colors[0]},\n  ${cs.join(",\n  ")}\n)`;
+  return `${rlg}(\n  ${angle}deg,\n  ${colors[0]},\n  ${cs.join(",\n  ")}\n)`;
 }
 
 // gera propriedade de fundo baseado em cores e opções
-function setbg(elem, colors, strategy, strw, stra, alpha, shuf) {
+function setbg(elem, colors, opts) {
+  let alpha = opts["alpha"];
+  const strategy = opts["cmix"];
   if (colors.length == 1) {
     alpha = 1.0;
   }
@@ -169,23 +178,36 @@ function setbg(elem, colors, strategy, strw, stra, alpha, shuf) {
     const color = blend(colors.map((c) => hex2rgba(c, alpha)));
     elem.style.backgroundColor = rgb2css(color);
   } else if (strategy == "stripes") {
-    const angle = `${stra}deg`;
-    const rcg = stripes(colors, angle, strw, shuf);
+    const rcg = stripes(colors, opts);
     elem.style.background = rcg;
   } else {
     throw `bad color strategy ${strategy}`;
   }
 }
 
+// remove os nomes
+function renomes() {
+  for (const cod in g["detalhes"]) {
+    const btn = document.getElementById(`opt_name_${cod}`);
+    input_set(btn, g["detalhes"][cod]["nome"]);
+  }
+  regen();
+}
+
 // coloca o texto formatado num td
-function aulas_fmt(td, codigos, fmt, dets, sep, borr) {
+function aulas_fmt(td, codigos, dets, opts) {
+  const fmt = opts["fmt"];
+  const borr = opts["borr"];
+  const sep = opts["sep"];
   let elems = [];
   for (const cod of codigos) {
     let codigo = dets[cod]["codigo"];
     if (sep) {
       codigo = codigo.substring(0, 3) + " " + codigo.substring(3);
     }
-    const nome = dets[cod]["nome"];
+    const nome = opts["name_" + cod];
+    const fsite = opts["site_" + cod];
+    const fcall = opts["call_" + cod];
     const da_aula = document.createElement("span");
     for (const cf of fmt) {
       const e = document.createElement("span");
@@ -203,6 +225,31 @@ function aulas_fmt(td, codigos, fmt, dets, sep, borr) {
       }
       da_aula.appendChild(e);
     }
+    // links
+    const linx = document.createElement("span");
+    if (fsite) {
+      const lsite = document.createElement("a");
+      lsite.innerText = "site";
+      lsite.target = "_blank";
+      lsite.href = fsite;
+      linx.appendChild(lsite);
+      if (fcall) {
+        linx.innerHTML += " · ";
+      }
+    }
+    if (fcall) {
+      const lcall = document.createElement("a");
+      lcall.href = fcall;
+      lcall.target = "_blank";
+      lcall.innerText = "call";
+      linx.appendChild(lcall);
+    }
+    if ((fcall || fsite) && !opts["nolinks"]) {
+      da_aula.appendChild(document.createElement("br"));
+      da_aula.appendChild(document.createTextNode("\n("));
+      da_aula.appendChild(linx);
+      da_aula.appendChild(document.createTextNode(")"));
+    }
     elems.push(() => da_aula);
   }
   elems = interleave(elems, () => document.createElement("hr"));
@@ -214,54 +261,32 @@ function aulas_fmt(td, codigos, fmt, dets, sep, borr) {
   td.appendChild(cont);
 }
 
-// salva as opções para um objeto
-function opt2obj() {
-  let opts = {}
-  for (const oname of OPTS) {
-    opts[oname] = input_get(document.getElementById(`opt_${oname}`));
-  }
-  for (const inp of document.querySelectorAll("input[type=color]")) {
-    const oname = inp.id.substring(4);
-    opts[oname] = input_get(inp);
-  }
-  return opts;
-}
-
-// coloca as opções no fragmento
-function obj2frag(obj) {
-  window.location.hash = compress(JSON.stringify(obj));
-}
-
-// carrega as opções do fragmento
-function frag2opt() {
-  return JSON.parse(decomp(window.location.hash.substring(1)));
-}
-
-// carrega as opções de objeto pros elementos
-function obj2opt(obj) {
-  for (const oname in obj) {
-    try {
-      input_set(document.getElementById(`opt_${oname}`), obj[oname]);
-    } catch (e) {}
-  }
-}
-
 // redireciona para a página de edição
 function edit() {
   const o = compress(JSON.stringify(g));
-  window.location.assign("editor/?o=" + o);
+  window.location.assign(`editor/${sh()}`);
 }
 
 // abre uma nova guia pra imprimir
-function imprimir() {
+function imprimir_old() {
   print_element(document.getElementById("mt"));
 }
 
+// abre uma nova guia na página de print
+function imprimir() {
+  const l = window.location;
+  const url = `${l.origin}${l.pathname}print/${l.search}${l.hash}`;
+  const w = window.open(url, "_blank");
+  w.focus();
+}
+
 // monta a tabela com o horário
-function regen() {
+function regen(opts) {
   // sincronizar opções
-  const opts = opt2obj();
-  obj2frag(opts);
+  if (!opts) {
+    opts = opt2obj();
+    obj2frag(opts);
+  }
   // elementos: thead e tbody
   const mh = document.getElementById("mh");
   const mb = document.getElementById("mb");
@@ -281,7 +306,6 @@ function regen() {
   }
   mh.appendChild(thr);
   // gerar corpo
-  const ins = color_inputs();
   for (let i = 0; i < g["horarios"].length - 1; i++) {
     const inicio = g["horarios"][i];
     const fim = g["horarios"][i+1];
@@ -297,15 +321,10 @@ function regen() {
       const codigos = byblock(g, dia, inicio, fim);
       const td = document.createElement("td");
       if (codigos.length > 0) {
-        let cores = codigos.map((c) => ins[c].value);
+        let cores = codigos.map((c) => opts[`color_${c}`]);
         cores.sort();
-        aulas_fmt(
-          td, codigos, opts["fmt"], g["detalhes"], opts["sep"], opts["borr"]
-        );
-        setbg(
-          td, cores, opts["cmix"], opts["strw"], opts["stra"], opts["alpha"],
-          opts["shuf"]
-        );
+        aulas_fmt(td, codigos, g["detalhes"], opts);
+        setbg(td, cores, opts);
       }
       tr.appendChild(td);
     }
@@ -317,6 +336,8 @@ function regen() {
     const row = mb.rows[i];
     for (let j = 0; j < row.cells.length; j++) {
       const cell = row.cells[j];
+      if (cell.innerText.length > 0 && opts["nmcl"]) continue;
+      if (cell.innerText.length == 0 && opts["nmvz"]) continue;
       for (let k = i+1; k < mb.rows.length; k++) {
         const below = mb.rows[k].cells[j];
         if (below.innerText.trim() == cell.innerText.trim()) {

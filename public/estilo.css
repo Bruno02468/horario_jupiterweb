@@ -32,20 +32,15 @@ input {
   margin-right: 1rem;
 }
 
-.color_example {
-  font-size: 80%;
-  font-weight: bold;
-  margin-left: 1rem;
-}
-
 #mt {
   border-collapse: collapse;
   display: inline-table;
-  table-layout: fixed;
   min-width: 95%;
+  table-layout: fixed;
 }
 
 #mb td, #mh th {
+  min-width: 10rem;
   border: 1px solid gray;
   text-align: center;
   background-color: #f0f0f0;
@@ -125,5 +120,11 @@ input {
 
 .formy>label>input[type=checkbox] {
   transform: scale(1.5, 1.5);
-  vertical-align: -moz-middle-with-baseline;
+  vertical-align: middle;
+}
+
+@media print {
+  .noprint {
+    display: none;
+  }
 }

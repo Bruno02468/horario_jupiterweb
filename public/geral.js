@@ -11,6 +11,17 @@ const COLORS = [
   "#f39c12", "#ec7063", "#c39bd3", "#85c1e9", "#7dcea0", "#f8c471"
 ];
 
+// nomes das opções
+const OPTS = [
+  "prop", "sep", "evil", "fmt", "fday", "stra", "strw", "cmix", "alpha",
+  "nosab", "borr", "shuf", "nmvz", "nmcl", "nolinks"
+];
+
+// nomes das opções por disciplina
+const BYMAT = [
+  "color", "name", "site", "call"
+];
+
 // nomes dos dias de semana nas várias configurações
 const DIAS = {
   "letra": {
@@ -69,10 +80,15 @@ function input_get(elem) {
 // função auxiliar: seta o valor de um input
 function input_set(elem, val) {
   if (elem.type == "checkbox") {
-    return elem.checked == val;
+    elem.checked = val ? "checked" : "";
   } else {
-    return elem.value = val;
+    elem.value = val;
   }
+}
+
+// retorna a search + hash
+function sh() {
+  return window.location.search + window.location.hash;
 }
 
 // algoritmo de compressão LZString, minificado pra caber em ~1.5 kB
@@ -229,4 +245,60 @@ function print_element(elem) {
   nw.document.title = "Horário";
   nw.document.body.style.margin = "3rem";
   nw.focus();
+}
+
+// retorna os nomes possíveis de opções, sem o opt_ antes
+function opt_names() {
+  let onames = [...OPTS];
+  for (const cod in g["detalhes"]) {
+    onames.push(...BYMAT.map((s) => `${s}_${cod}`));
+  }
+  return onames;
+}
+
+// salva as opções para um objeto
+function opt2obj() {
+  let opts = {};
+  for (const oname of opt_names()) {
+    opts[oname] = input_get(document.getElementById(`opt_${oname}`));
+  }
+  return opts;
+}
+
+// coloca as opções no fragmento
+function obj2frag(obj) {
+  window.location.hash = compress(JSON.stringify(obj));
+}
+
+// carrega as opções do fragmento para um objeto
+function frag2obj() {
+  try {
+    return JSON.parse(decomp(window.location.hash.substring(1)));
+  } catch {
+    return {};
+  }  
+}
+
+// carrega as opções de um objeto pros elementos
+function obj2opt(obj) {
+  for (const oname in obj) {
+    try {
+      input_set(document.getElementById(`opt_${oname}`), obj[oname]);
+    } catch {}
+  }
+}
+
+// encurta um link usando shrtco.de
+function shorten_link(url, callback) {
+  const endpoint = "https://api.shrtco.de/v2/";
+  url = encodeURIComponent(url);
+  fetch(`${endpoint}shorten?url=${url}`)
+  .then((response) => response.json())
+  .then(function(json) {
+    if (json["ok"]) {
+      callback(json["result"]["full_short_link"]);
+    } else {
+      callback("Erro! Avise o Borges: " + JSON.stringify(json));
+    }
+  });
 }

@@ -139,15 +139,14 @@ function reset() {
 
 // ação de botão: volta
 function givei() {
-  const o = new URLSearchParams(window.location.search).get("o");
-  window.location.assign("../?o=" + o);
+  window.location.assign(`../${sh()}`);
 }
 
 // ação de botão: salva e volta
 function commit() {
   g["aulas"] = capture_fields();
   const o = compress(JSON.stringify(g));
-  window.location.assign("../?o=" + o);
+  window.location.assign("../?o=" + o + window.location.hash);
 }
 
 init_fields();
