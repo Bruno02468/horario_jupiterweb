@@ -67,6 +67,10 @@ input {
   border-top: 1px solid rgb(136, 136, 136);
 }
 
+#mb td:first-child, #mh th {
+  font-size: 110%;
+}
+
 #mb td>span>span {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;

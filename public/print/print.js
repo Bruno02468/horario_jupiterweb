@@ -14,9 +14,9 @@ function print_here() {
 // gera um link encurtado para cá
 function mkshort(btn) {
   btn.innerText = "Espera um pouco...";
-  setTimeout(() => btn.innerText = "Aguenta as pontas...", 2000);
-  setTimeout(() => btn.innerText = "Tá chegando...", 4000);
-  setTimeout(() => btn.innerText = "Quase lá...", 6000);
+  setTimeout(() => btn.innerText = "Aguenta as pontas...", 2500);
+  setTimeout(() => btn.innerText = "Tá chegando...", 4500);
+  setTimeout(() => btn.innerText = "Quase lá...", 6500);
   shorten_link(window.location.href, gotlink);
 }
 
