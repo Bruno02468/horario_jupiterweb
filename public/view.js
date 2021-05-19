@@ -20,7 +20,7 @@ function kickstart() {
   }
   const bm = document.getElementById("bookmarklet_mobile");
   const bl = document.getElementById("bookmarklet");
-  bm.value = bl.href;
+  bm.value = bl.href.substring(11);
   bm.addEventListener("click", () => bm.select());
   bm.addEventListener("focus", () => bm.select());
   bm.addEventListener("mouseover", () => bm.select());
