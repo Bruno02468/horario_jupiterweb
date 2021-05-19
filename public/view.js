@@ -152,6 +152,7 @@ function blend(colors) {
 function stripes(colors, opts) {
   const angle = opts["stra"];
   const shuf = opts["shuf"];
+  const width = opts["strw"];
   if (shuf) {
     shuffle(colors);
   }
