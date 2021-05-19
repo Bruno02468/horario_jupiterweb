@@ -17,6 +17,7 @@ function mkshort(btn) {
   setTimeout(() => btn.innerText = "Aguenta as pontas...", 2500);
   setTimeout(() => btn.innerText = "Tá chegando...", 4500);
   setTimeout(() => btn.innerText = "Quase lá...", 6500);
+  setTimeout(() => btn.innerText = "Se prepara...", 8500);
   shorten_link(window.location.href, gotlink);
 }
 
@@ -30,6 +31,8 @@ function gotlink(linky) {
   inp.style.textAlign = "center";
   inp.value = linky;
   inp.addEventListener("focus", () => inp.select());
+  inp.addEventListener("click", () => inp.select());
+  inp.addEventListener("mouseover", () => inp.select());
   const tgt = document.getElementById("link_tgt");
   tgt.children[0].style.display = "none";
   tgt.appendChild(inp);

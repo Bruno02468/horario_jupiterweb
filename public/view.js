@@ -18,6 +18,12 @@ function kickstart() {
   } else {
     document.getElementById("has_enc").style.display = "none";
   }
+  const bm = document.getElementById("bookmarklet_mobile");
+  const bl = document.getElementById("bookmarklet");
+  bm.value = bl.href;
+  bm.addEventListener("click", () => bm.select());
+  bm.addEventListener("focus", () => bm.select());
+  bm.addEventListener("mouseover", () => bm.select());
 }
 
 // chamada no primeiro carregamento com horário na URL
