@@ -90,6 +90,7 @@ function reset() {
 // "aplica" os formulários no g atual
 function capture_forms() {
   let subst = {};
+  g["detalhes"] = {};
   for (const form of forms) {
     const old_code = form["in_old_code"].value;
     const code = form["in_code"].value;
