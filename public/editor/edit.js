@@ -44,7 +44,7 @@ function gen_input_time() {
   inp.step = 60;
   inp.value = "08:00";  
   return inp;
-} 
+}
 
 // insere um campo na lista!
 function add_field() {

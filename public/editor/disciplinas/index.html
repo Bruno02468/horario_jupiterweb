@@ -12,9 +12,9 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Editando horário...">
+    <meta name="description" content="Editando disciplinas...">
     <meta name="author" content="Bruno Borges Paschoalinoto">
-    <title>Editando horário...</title>
+    <title>Editando disciplinas...</title>
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
     rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css"
@@ -24,21 +24,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"
     integrity="sha512-qoCTmFwBtCPvFhA+WAqatSOrghwpDhFHxwAGh+cppWonXbHA09nG1z5zi4/NGnp8dUhXiVrzA6EnKgJA+fyrpw=="
     crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../estilo.css">
+    <link rel="stylesheet" href="../../estilo.css">
   </head>
   <body>
     <div class="container center">
       <div class="row">
-        <h2>Editando horário</h2>
+        <h2>Editando disciplinas</h2>
         <h6>
-          Se alguma aula mudou de dia ou algo assim, você pode editar as aulas
-          por aqui para elas baterem com a realidade.
+          Aqui você pode editar as disciplinas em si.
           <br>
         </h6>
       </div>
       <div class="row">
         <div class="three columns">
-          <button onclick="add_field();">Inserir linha</button>
+          <button onclick="add_line();">Inserir nova</button>
         </div>
         <div class="three columns">
           <button onclick="reset();">Limpar alterações</button>
@@ -51,7 +50,7 @@
         </div>
       </div>
       <br>
-      <div id="iaulas">
+      <div id="idiscs">
       </div>
       <div class="row">
         <div class="twelve columns">
@@ -74,6 +73,6 @@
         </div>
       </div>
     </div>
-    <script src="../geral.js"></script>
-    <script src="edit.js"></script>>
+    <script src="../../geral.js"></script>
+    <script src="disc.js"></script>>
   </body>
