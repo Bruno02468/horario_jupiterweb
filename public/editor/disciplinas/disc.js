@@ -115,14 +115,14 @@ function capture_forms() {
 // ação de botão: volta
 function givei() {
   g = extract();
-  window.location.assign(`../${sh()}`);
+  window.location.assign(`../../${sh()}`);
 }
 
 // ação de botão: salva e volta
 function commit() {
   capture_forms();
   const o = compress(JSON.stringify(g));
-  window.location.assign("../?o=" + o + window.location.hash);
+  window.location.assign("../../?o=" + o + window.location.hash);
 }
 
 init_forms();

@@ -268,10 +268,16 @@ function aulas_fmt(td, codigos, dets, opts) {
   td.appendChild(cont);
 }
 
-// redireciona para a página de edição
+// redireciona para a página de edição de horário
 function edit() {
   const o = compress(JSON.stringify(g));
   window.location.assign(`editor/${sh()}`);
+}
+
+// redireciona para a página de edição de disciplinas
+function edit_discs() {
+  const o = compress(JSON.stringify(g));
+  window.location.assign(`editor/disciplinas/${sh()}`);
 }
 
 // abre uma nova guia pra imprimir
