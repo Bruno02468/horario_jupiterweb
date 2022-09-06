@@ -120,7 +120,7 @@ function givei() {
 
 // ação de botão: salva e volta
 function commit() {
-  commit_forms();
+  capture_forms();
   const o = compress(JSON.stringify(g));
   window.location.assign("../?o=" + o + window.location.hash);
 }
