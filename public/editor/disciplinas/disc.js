@@ -94,7 +94,7 @@ function capture_forms() {
     const old_code = form["in_old_code"].value;
     const code = form["in_code"].value;
     const name = form["in_name"].value;
-    g["detalhes"][codigo] = {
+    g["detalhes"][code] = {
       "codigo": code,
       "nome": name
     };
