@@ -72,7 +72,8 @@ function del_line(nid) {
 // carrega as aulas do json pro formulário
 function init_forms() {
   g = extract();
-  for (const disc of g["detalhes"]) {
+  for (const cod in g["detalhes"]) {
+    let disc = g["detalhes"][cod];
     add_line(disc["codigo"], disc["nome"]);
   }
 }
