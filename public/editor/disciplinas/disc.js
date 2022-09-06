@@ -124,4 +124,4 @@ function commit() {
   window.location.assign("../?o=" + o + window.location.hash);
 }
 
-init_fields();
+init_forms();
